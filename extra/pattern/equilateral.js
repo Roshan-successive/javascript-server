@@ -12,4 +12,5 @@ function equitriangle(n)
         j--;
   }
 }
-equitriangle(10)
+n = process.argv[2];
+equitriangle(n)

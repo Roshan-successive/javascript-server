@@ -20,4 +20,5 @@ function diamond(n)
     }
 
 }
-diamond(5)
+n = process.argv[2];
+diamond(n);
