@@ -5,12 +5,6 @@ let permission =
         read : ['trainee', 'trainer'],
         write : ['trainer'],
         Delete: [],
-    },
-    'getUsers2': {
-        all: ['head-trainer'],
-        read : ['trainee', 'trainer'],
-        write : ['trainer'],
-        Delete: [],
     }
 }
 
@@ -18,9 +12,9 @@ function hasPermission(moduleName,role,permissionType)
 {
     const {all,read,write,Delete={}} = moduleName;
 
-    let f = all.includes(role);
+    let a = all.includes(role);
     
-    if(f==true)
+    if(a==true)
     {
         return true;
     }
@@ -28,24 +22,22 @@ function hasPermission(moduleName,role,permissionType)
     {
         if(permissionType == "read")
         {
-            f=read.includes(role);
-            console.log(f);
-            return f;
+            a=read.includes(role);
+            return a;
         }
         else if(permissionType == "write"){
-            f=write.includes(role);
-            return f;
+            a=write.includes(role);
+            return a;
         }
         else if(permissionType == "Delete"){
-            f=Delete.includes(role);
-            return f;
+            a=Delete.includes(role);
+            return a;
         }
     }
 }
 let {getUsers1, getUsers2} = permission;
 
 const result = hasPermission(getUsers1,"trainer","write");
-const result1 = hasPermission(getUsers2,"trainer","write");
+
 
 console.log(result);
-console.log(result1);
