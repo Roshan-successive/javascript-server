@@ -4,13 +4,7 @@ let permissions={
     read : ['trainee', 'trainer'],
     write : ['trainer'],
     delete: [],
-    },
-    'getUser': {
-    all: ['head-trainer'],
-    read : ['trainee', 'trainer'],
-    write : ['trainer'],
-    delete: [],
-    }     
+    },        
 }
 function hasPermission(moduleName,role,permissionType){
     if(!moduleName.hasOwnProperty(permissionType)){
@@ -24,6 +18,11 @@ function hasPermission(moduleName,role,permissionType){
         }
 }
         
-const { getUser, getUsers } = permissions;
+
 hasPermission(permissions.getUsers,'trainee', 'read');
-hasPermission(permissions.getUser,'traier','write');
+hasPermission(permissions.getUsers,'traier','write');
+    
+        
+       
+       
+    
