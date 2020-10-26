@@ -1,4 +1,4 @@
-function diamond(n)
+export default function diamond(n)
 {
     // using for space
     let s= "";
@@ -20,5 +20,5 @@ function diamond(n)
     }
 
 }
-n = process.argv[2];
-diamond(n);
+// n = process.argv[2];
+// diamond(n);
