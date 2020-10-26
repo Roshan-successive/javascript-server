@@ -1,4 +1,4 @@
-function equitriangle(n)
+export default function equitriangle(n)
 {
     // using for space
     let s="";
@@ -12,5 +12,5 @@ function equitriangle(n)
         j--;
   }
 }
-n = process.argv[2];
-equitriangle(n)
+// n = process.argv[2];
+// equitriangle(n)
