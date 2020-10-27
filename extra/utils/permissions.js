@@ -12,5 +12,5 @@ function hasPermission(moduleName,role,permissionType){
 }
         
 // const { getUser, getUsers } = permissions;
-// hasPermission(permissions.getUsers,'trainee', 'read');
-// hasPermission(permissions.getUser,'traier','write');
+// hasPermission('getUsers','head-trainer', 'read');
+// hasPermission('getUser','trainer','write');
