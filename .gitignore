@@ -1,4 +1,4 @@
 node_modules
-dist_folder
+dist
 .vscode
 package-lock.json
