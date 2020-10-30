@@ -15,10 +15,10 @@ class traineeController {
             console.log("Inside get method of Trainee Controller");
 
             res.send({
-                message: "Trainee fetched successfully",
+                message: "Trainee displayed successfully",
                 data: [
                     {
-                        name: "Trainee",
+                        name: "Roshan",
                         address: "Noida"
                     }
                 ]
@@ -35,10 +35,10 @@ class traineeController {
             console.log("Inside post method of Trainee Controller");
 
             res.send({
-                message: "Trainee fetched successfully",
+                message: "Trainee created  successfully",
                 data: [
                     {
-                        name: "Trainee",
+                        name: "Roshan",
                         address: "Noida"
                     }
                 ]
@@ -55,10 +55,10 @@ class traineeController {
             console.log("Inside update method of Trainee Controller");
 
             res.send({
-                message: "Trainee fetched successfully",
+                message: "Trainee updated successfully",
                 data: [
                     {
-                        name: "Trainee",
+                        name: "Roshan",
                         address: "Noida"
                     }
                 ]
@@ -74,10 +74,10 @@ class traineeController {
             console.log("Inside delete method of Trainee Controller");
 
             res.send({
-                message: "Trainee fetched successfully",
+                message: "Trainee deleted successfully",
                 data: [
                     {
-                        name: "Trainee",
+                        name: "Roshan",
                         address: "Noida"
                     }
                 ]

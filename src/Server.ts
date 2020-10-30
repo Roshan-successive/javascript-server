@@ -2,7 +2,6 @@ import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import {notFoundRoute , errorHandler} from './libs/routes';
 class Server {
-// tslint:disable-next-line: semicolon
 app
 constructor(private config) {
 this.app = express();
