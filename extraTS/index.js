@@ -1,0 +1,11 @@
+"use strict";
+exports.__esModule = true;
+var pattern_1 = require("./pattern");
+var permissions_1 = require("./utils/permissions");
+var constants_1 = require("./constants");
+var validation_1 = require("./utils/validation");
+pattern_1.diamond(5);
+pattern_1.equitriangle(6);
+var result = permissions_1["default"]('getUsers', 'trainer', 'read');
+console.log(result);
+validation_1["default"](constants_1.user);
