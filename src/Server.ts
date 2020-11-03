@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import {notFoundRoute , errorHandler} from './libs/routes';
+import mainRouter from './router';
 class Server {
 app
 constructor(private config) {
@@ -16,14 +17,18 @@ return this;
 }
 SetupRoutes() {
 //const {app} = this;
+
 this.app.get('/health-check', (req, res, next) => {
-res.send('i am ok');
-next()
+    res.send('i am ok');
+    next()
 });
+this.app.use('/api',mainRouter);
+
 this.app.use(notFoundRoute);
-        
+
 this.app.use(errorHandler);
-return this;
+
+
 }
 run() {
 const {app, config: {PORT}} = this;
