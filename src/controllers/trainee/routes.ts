@@ -1,15 +1,16 @@
 import { Router } from 'express';
-import TraineeController from './controller';
-import validationHandler from '../../libs/validationHandler';
+
+import traineeController from './controller';
+
+import validationHandler from '../../libs/routes/validationHandler';
 import validation from './validation';
-import { traineeRouter } from '.';
-const traineeRoutes = Router();
+const traineeRouter = Router();
 
-traineeRoutes.route('/')
-        .get( validationHandler( validation.get ) , TraineeController.get )
-        .post( validationHandler( validation.create ) , TraineeController.post )
-        .put( validationHandler( validation.update ) , TraineeController.put )
-        .delete( validationHandler( validation.Delete ) , TraineeController.Delete );
-        traineeRouter.route('/:id')
-
-export default traineeRoutes;
+traineeRouter.route('/')
+    .get(validationHandler(validation.get),traineeController.get)
+    .post(validationHandler(validation.create),traineeController.create)
+    .put(validationHandler(validation.update),traineeController.update)
+    .delete(validationHandler(validation.Delete),traineeController.delete)
+    traineeRouter.route('/:id')
+    .delete(validationHandler(validation.Delete),traineeController.delete)
+export default traineeRouter;
