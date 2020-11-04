@@ -1,4 +1,5 @@
-export let permissions: Ipermission = {
+import {IPermissions, IUsers} from './interfaces';
+export let permissions: IPermissions = {
     'getUsers': {
     all: ['head-trainer'],
     read : ['trainee', 'trainer'],

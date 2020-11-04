@@ -8,14 +8,60 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
     console.log( req.query );
     console.log(Object.keys( req.query ).length );
     const keys = Object.keys( config );
+
+    keys.forEach((key) => { 
+        const obj = config[key];
+        console.log('key is' , key);
+        const values = obj.in.map( ( val ) => {
+            // console.log( 'val',val );
+            // console.log( 'key', key );
+
     keys.forEach((key) => {
         const obj = config[key];
         console.log('key is' , key);
         const values = obj.in.map( ( val ) => {
+
             return req[ val ][ key ];
         });
 
         // Checking for In i.e Body or Query
+
+        console.log('body is' ,req[obj.in]);
+        console.log('body', Object.keys(req[obj.in]).length);
+        
+        if(Object.keys(req[obj.in]).length == 0){
+            errors.push({
+                message: `Values should be passed through ${obj.in}`,
+                status: 400
+            })
+        }
+
+        // Checking for required
+        console.log('values is' ,values)
+        // console.log( 'values exist' , isNull( values ) );
+        if(obj.required){
+            if(isNull(values)){
+                errors.push({
+                    message: `${key} is required`,
+                    status: 404
+                })
+            }
+        }
+        if(obj.string){
+            if( ! ( typeof ( values[0] ) === 'string' ) ) {
+                errors.push({
+                    message: `${key} Should be a String`,
+                    status: 404
+                })
+            }
+        }
+        if(obj.isObject){
+            if( ! ( typeof ( values ) == 'object' ) ) {
+                errors.push({
+                    message: `${key} Should be an object`,
+                    status: 404
+                })
+
         console.log('body is', req[obj.in]);
         console.log('body', Object.keys( req[obj.in] ).length );
         if (Object.keys( req[obj.in] ).length === 0) {
@@ -49,6 +95,7 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
                     message: `${key} Should be an object`,
                     status: 404
                 });
+
             }
         }
         if (obj.regex) {
@@ -60,6 +107,10 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
                 });
             }
         }
+
+        if (obj.number) {
+            if (!isNaN(values[0]) || values[0] === '' || values[0] === undefined) {
+
         // if (obj.default) {
         //     if ( values[0] === '' ) {
         //        values[0] === obj.default;
@@ -67,6 +118,7 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
         // }
         if (obj.number) {
             if (isNaN(values[0]) || values[0] === undefined) {
+
                 errors.push({
                     message: `${key}  must be an number` ,
                     status: 400,
@@ -74,7 +126,11 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
             }
         }
 
+    })
+
+
     });
+
     if (errors.length > 0) {
         res.status(400).send({ errors});
     }
@@ -82,6 +138,12 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
         next();
     }
 };
+
+
+function isNull( obj) {
+    // console.log('obj[0',obj[0]);
+    const a = ( obj == undefined || obj === null );
+    // console.log('result' , a);
 
 function isNull( obj ) {
     const a = ( obj === undefined || obj === null );
