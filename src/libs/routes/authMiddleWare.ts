@@ -13,7 +13,7 @@ export default (module: any , permissionType:string ) =>(req,res,next)=>{
         } catch(err) {
         console.log(":::::::::::::::error", err)
         }
-    const result = hasPermission1(module , User.Role , permissionType);
+    const result = hasPermission1(module , User.role , permissionType);
     console.log('result is',result);
     if(result===true)
         next();
