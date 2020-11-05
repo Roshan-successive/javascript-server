@@ -3,6 +3,6 @@ import { traineeRouter } from './controllers/trainee';
 
 const mainRouter = Router();
 
-mainRouter.arguments('/trainee', traineeRouter);
+mainRouter.use('/trainee', traineeRouter);
 
 export default mainRouter;

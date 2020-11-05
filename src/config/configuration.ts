@@ -1,12 +1,8 @@
-import { IConfig } from './IConfig';
-// import * as dotenv from 'dotenv';
-// console.log(dotenv);
+const enVars = require('dotenv').config();
 
+console.log('Inside config', enVars);
 
-// tslint:disable-next-line: no-var-requires
-const envVars = require ('dotenv').config();
-console.log('Inside config', envVars);
-const config = envVars.parsed;
+const config: IConfig = enVars.parsed;
 Object.freeze(config);
-// config.PORT=7000;
+
 export default config;

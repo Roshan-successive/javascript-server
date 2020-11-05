@@ -1,4 +1,4 @@
-interface IUsers {
+export interface IUsers {
     traineeEmail: string;
     reviewerEmail: string;
 }
@@ -9,7 +9,7 @@ type accesses = {
     Delete: string[];
 };
 
-interface Ipermission {
+export interface IPermissions {
     getUsers: accesses;
     getUser1: accesses;
 }
