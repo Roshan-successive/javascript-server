@@ -1,6 +1,6 @@
 import * as express from 'express';
 import TraineeController from './controller';
-import validationHandler from '../../libs/routes/validationHandler';
+import validationHandler from '../../libs/validationHandler';
 import config from './validation';
 import authMiddleWare from '../../libs/routes/authMiddleWare';
 import {permissions,user} from '../../libs/routes/Constants';
