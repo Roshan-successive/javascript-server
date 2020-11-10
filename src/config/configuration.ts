@@ -1,4 +1,4 @@
-import { IConfig } from './IConfig';
+//import { IConfig } from './IConfig';
 const envVars = require ('dotenv').config();
 console.log('Inside config', envVars);
 const config = envVars.parsed;

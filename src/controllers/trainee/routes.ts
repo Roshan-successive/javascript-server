@@ -8,8 +8,8 @@ const traineeRoutes = express.Router();
 
 traineeRoutes.route('/')
         .get(authMiddleWare(permissions.getUsers,'read'),validationHandler( config.get ) , TraineeController.get )
-        .post( authMiddleWare(permissions.getUsers,'write'),validationHandler( config.create ) , TraineeController.post )
-        .put( authMiddleWare(permissions.getUsers,'all'),validationHandler( config.update ) , TraineeController.put )
-        .delete(authMiddleWare(permissions.getUsers,'Delete'), validationHandler( config.Delete ) , TraineeController.Delete );
+        .post( authMiddleWare(permissions.getUsers,'write'),validationHandler( config.create ) , TraineeController.create )
+        .put( authMiddleWare(permissions.getUsers,'all'),validationHandler( config.update ) , TraineeController.update)
+        .delete(authMiddleWare(permissions.getUsers,'Delete'), validationHandler( config.Delete ) , TraineeController.delete );
 
 export default traineeRoutes;
