@@ -1,19 +1,18 @@
-"use strict";
-exports.__esModule = true;
-var config = {
+
+const config = {
     get: {
         skip: {
             required: false,
-            "default": 0,
+            default: 0,
             number: true,
-            "in": ['query'],
+            in: ['query'],
             errorMessage: 'Skip is invalid'
         },
         limit: {
             required: false,
-            "default": 10,
+            default: 10,
             number: true,
-            "in": ['query'],
+            in: ['query'],
             errorMessage: 'Limit is invalid'
         }
     },
@@ -21,16 +20,15 @@ var config = {
         id: {
             required: true,
             string: true,
-            "in": ['body'],
-            custom: function (Value) {
-                console.log("Value " + Value);
+            in: ['body'],
+            custom: () => {
                 throw { error: 'Error Occured', message: 'Message' };
             }
         },
         name: {
             required: true,
             regex: '',
-            "in": ['body'],
+            in: ['body'],
             errorMessage: 'Name is required'
         }
     },
@@ -38,20 +36,33 @@ var config = {
         id: {
             required: true,
             errorMessage: 'Id is required',
-            "in": ['params']
+            in: ['params']
         }
     },
     update: {
         id: {
             required: true,
             string: true,
-            "in": ['body']
+            in: ['body']
         },
         dataToUpdate: {
-            "in": ['body'],
+            in: ['body'],
             required: true,
-            isObject: true
+            isObject: true,
+        }
+    },
+    login: {
+        email: {
+            required: true,
+            string: true,
+            in: ['body']
+        },
+        password: {
+            required: true,
+            string: true,
+            in: ['body']
         }
     }
 };
-exports["default"] = config;
+
+export default config;

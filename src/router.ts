@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import { traineeRouter } from './controllers/trainee';
+import { userRouter } from './controllers/user';
 
-const mainRouter = Router;
+const mainRouter = Router();
 
-mainRouter.arguments('/trainee', traineeRouter);
+mainRouter.use('/trainee', traineeRouter);
+mainRouter.use('/user', userRouter);
 
 export default mainRouter;
