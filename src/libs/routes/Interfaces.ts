@@ -1,8 +1,3 @@
-export interface IUser {
-    traineeEmail: string;
-    reviewerEmail: string;
-}
-
 type access = {
     all: string[];
     read: string[];
@@ -12,5 +7,4 @@ type access = {
 
 export interface  IPermission {
     getUsers: access ;
-    getUser: access;
 }
