@@ -1,4 +1,7 @@
 interface IConfig {
-    PORT: number;
-    NODE_ENV: string;
-}
+    port: string;
+    nodeenv: string;
+    mongourl: string;
+    KEY: string;
+    }
+    export { IConfig };
