@@ -7,15 +7,18 @@ import config from './validation';
 const UserRouter = express.Router();
 
 UserRouter.route('/')
-.get( UserController.get)
-.post( UserController.create)
-.put( UserController.update)
-.delete( UserController.delete);
+// .get( UserController.get)
+.post(authMiddleWare ( permissions.getUsers, 'read' ), UserController.create )
+.put(authMiddleWare ( permissions.getUsers, 'read' ), UserController.update )
+.delete(authMiddleWare ( permissions.getUsers, 'read' ), UserController.remove)
+
+UserRouter.route('/:id')
+    .delete( authMiddleWare ( permissions.getUsers, 'read' ), UserController.remove );
 
 UserRouter.route('/me')
-.get(authMiddleWare ( permissions.getUsers, 'read' ), UserController.me);
+    .get(authMiddleWare ( permissions.getUsers, 'all' ), UserController.me);
 
 UserRouter.route('/login')
-.post( validationHandler ( config.login ) , UserController.login );
+    .post( validationHandler ( config.login ) , UserController.login );
 
 export default UserRouter;
