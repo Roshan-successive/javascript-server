@@ -19,35 +19,29 @@ class UserController {
             });
         });
 }
-public async get(req: Request, res: Response, next: NextFunction) {
+async get(req: IRequest, res: Response, next: NextFunction) {
 
-  const user = new UserRepository();
-  const { id } = req.query;
+    try {
+        console.log('Inside get method of User Controller');
 
-  await user.getUser({ id })
-      .then((data) => {
-          if (data === null) {
-              throw undefined;
-          }
-
-          res.status(200).send({
-              message: 'User Fetched successfully',
-
-              data,
-
-              code: 200
-          });
-
-      })
-      .catch(err => {
-          console.log(err);
-          res.send({
-              error: 'User not found',
-              code: 500
-          });
-      });
-
+        const userRepository = new UserRepository();
+        const sort = {};
+        sort[`${req.query.sortedBy}`] = req.query.sortedOrder;
+        console.log(sort);
+        const extractedData = await userRepository.getAll(req.body).sort(sort).skip(Number(req.query.skip)).limit(Number(req.query.limit));
+        res.status(200).send({
+            message: 'trainee fetched successfully',
+            totalCount: await userRepository.count(req.body),
+            count: extractedData.length,
+            data: [extractedData],
+            status: 'success',
+        });
+    }
+    catch (err) {
+        console.log('Inside err', err);
+    }
 }
+
 
 public async create(req: IRequest, res: Response, next: NextFunction) {
     const { id, email, name, role, password } = req.body;
@@ -80,7 +74,7 @@ public async update(req: IRequest, res: Response, next: NextFunction) {
     const user = new UserRepository();
     await user.updateUser( id, dataToUpdate, updator)
     .then((result) => {
-        console.log('result' , result); 
+        console.log('result' , result);
         res.send({
             data: result,
             message: 'User Updated',
@@ -98,7 +92,7 @@ public async update(req: IRequest, res: Response, next: NextFunction) {
 
 public async remove(req: IRequest, res: Response, next: NextFunction) {
     const  id  = req.params.id;
-    console.log("id is", id)
+    console.log('id is', id);
     const remover = req.userData._id;
     const user = new UserRepository();
     await user.deleteData(id, remover)
@@ -115,12 +109,12 @@ public async remove(req: IRequest, res: Response, next: NextFunction) {
         });
     });
 }
-  
+
       public async login(req: IRequest, res: Response, next: NextFunction) {
           const { email } = req.body;
           console.log('Inside User Controller login');
           const user = new UserRepository();
-  
+
           await user.getUser({ email })
               .then((userData) => {
                   if (userData === null) {
@@ -130,9 +124,9 @@ public async remove(req: IRequest, res: Response, next: NextFunction) {
                       });
                       return;
                   }
-  
+
                   const { password } = userData;
-  
+
                   if (!bcrypt.compareSync(req.body.password, password)) {
                       res.status(401).send({
                           err: 'Invalid Password',
@@ -140,7 +134,7 @@ public async remove(req: IRequest, res: Response, next: NextFunction) {
                       });
                       return;
                   }
-  
+
                   const token = jwt.sign( userData.toJSON(), configuration.KEY, {
                   expiresIn: Math.floor(Date.now() / 1000) + ( 15 * 60), } );
                   res.send({
@@ -149,10 +143,10 @@ public async remove(req: IRequest, res: Response, next: NextFunction) {
                       'token': token
                   });
                   return;
-  
+
               });
       }
-  
+
   }
-  
+
   export default new UserController();

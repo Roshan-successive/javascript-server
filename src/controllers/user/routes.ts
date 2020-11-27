@@ -7,8 +7,8 @@ import { permissions , user } from '../../libs/routes/Constants';
 import { validationHandler }  from '../../libs/routes/validationHandler';
 const UserRouter = Router();
 
-UserRouter.get('/get',authMiddleWare('getUsers', 'read'), validationHandler(validation.get),
-    UserController.get ,authMiddleWare('getUsers', 'read'));
+UserRouter.get('/get', authMiddleWare('getUsers', 'read'), validationHandler(validation.get),
+    UserController.get , authMiddleWare('getUsers', 'read'));
 
 UserRouter.post('/create', authMiddleWare('getUsers', 'read'), validationHandler(validation.create),
     UserController.create);
