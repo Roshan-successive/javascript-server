@@ -1,24 +1,24 @@
 import * as express from 'express';
 import UserController from './controller';
-import authMiddleWare from '../../libs/routes/authMiddleWare';
-import { permissions } from '../../libs/routes/Constants';
-import validationHandler from '../../libs/routes/validationHandler';
-import config from './validation';
-const UserRouter = express.Router();
+import { Router } from  'express';
+import validation from './validation';
+import { authMiddleWare } from '../../libs/routes/authMiddleWare';
+import { permissions , user } from '../../libs/routes/Constants';
+import { validationHandler }  from '../../libs/routes/validationHandler';
+const UserRouter = Router();
 
-UserRouter.route('/')
-// .get( UserController.get)
-.post(authMiddleWare ( permissions.getUsers, 'read' ), UserController.create )
-.put(authMiddleWare ( permissions.getUsers, 'read' ), UserController.update )
-.delete(authMiddleWare ( permissions.getUsers, 'read' ), UserController.remove)
+UserRouter.get('/get',authMiddleWare('getUsers', 'read'), validationHandler(validation.get),
+    UserController.get ,authMiddleWare('getUsers', 'read'));
 
-UserRouter.route('/:id')
-    .delete( authMiddleWare ( permissions.getUsers, 'read' ), UserController.remove );
+UserRouter.post('/create', authMiddleWare('getUsers', 'read'), validationHandler(validation.create),
+    UserController.create);
+UserRouter.put('/update', authMiddleWare('getUsers', 'read'), validationHandler(validation.update),
+    UserController.update);
+UserRouter.delete('/:id', authMiddleWare('getUser1', 'Delete'), validationHandler(validation.delete),
+    UserController.remove);
+UserRouter.post('/login', validationHandler(validation.login), UserController.login);
+UserRouter.get('/me', authMiddleWare('getUsers', 'read'), UserController.me);
 
-UserRouter.route('/me')
-    .get(authMiddleWare ( permissions.getUsers, 'all' ), UserController.me);
 
-UserRouter.route('/login')
-    .post( validationHandler ( config.login ) , UserController.login );
 
 export default UserRouter;

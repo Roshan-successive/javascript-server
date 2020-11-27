@@ -40,21 +40,18 @@
   },
   "dependencies": {
     "@types/express": "^4.17.8",
-
     "@types/mongoose": "^5.7.37",
     "@types/node": "^14.14.6",
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.13",
-
-    "dotenv": "^8.2.0",
-
-
     "src": "^1.1.2"
   },
   "husky": {
     "hooks": {
-    "pre-commit": "npm lint",
-    "pre-push": "npm lint"
+      "pre-commit": "npm lint",
+      "pre-push": "npm lint"
     }
-    }
+  }
 }
