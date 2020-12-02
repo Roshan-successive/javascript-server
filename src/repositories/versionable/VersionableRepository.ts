@@ -11,8 +11,10 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
         return String(mongoose.Types.ObjectId());
     }
 
-    public count() {
-        return this.model.countDocuments();
+    public count(query: any): Query<number> {
+        const finalQuery = { deletedAt: undefined};
+        console.log(finalQuery);
+        return this.model.countDocuments(finalQuery);
     }
     public findOne(query) {
         return this.model.findOne(query).lean();
@@ -21,7 +23,10 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
         return this.model.find(query);
     }
 
-
+    public getAll(query: any, projection: any = {}, options: any = {}): DocumentQuery<D[], D> {
+        const finalQuery = { deletedAt: undefined, ...query };
+        return this.model.find();
+    }
     public async createUser(data: any, creator): Promise<D> {
         const id = VersionableRepository.generateObjectId();
 
@@ -47,7 +52,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
         let originalData;
         // console.log()
-        await this.findOne({ id: id, updatedAt: undefined, deletedAt: undefined })
+        await this.findOne({ id, updatedAt: undefined, deletedAt: undefined })
             .then((data) => {
                 if (data === null) {
                     throw undefined;
@@ -71,7 +76,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
                 this.model.updateOne({ _id: oldId }, oldModel)
                     .then((res) => {
                         if (res === null) {
-                            throw '';
+                            throw new Error('');
                         }
                         else
                             return res;
@@ -87,7 +92,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
         let originalData;
 
-        await this.findOne({ id: id, deletedAt: undefined })
+        await this.findOne({ id, deletedAt: undefined })
             .then((data) => {
                 if (data === null) {
                     throw undefined;
