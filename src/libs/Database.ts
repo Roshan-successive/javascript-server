@@ -16,7 +16,7 @@ export default class Database {
 
                 console.log('Database Connected');
                 seedData();
-                resolve();
+                resolve(undefined);
             });
         });
     }
