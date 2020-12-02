@@ -1,10 +1,12 @@
 import versionableSchema from '../versionable/VersionableSchema';
-
+import * as mongoose from 'mongoose';
+import { stringify } from 'querystring';
 class UserSchema extends versionableSchema {
 
-    constructor(collection) {
+    constructor(collection: any) {
         const baseSchema = Object.assign({
             _id: String,
+            id: String,
             name: String,
             email: String,
             role: String,

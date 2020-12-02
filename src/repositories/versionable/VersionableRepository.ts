@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose';
+import { DocumentQuery, Query } from 'mongoose';
 
 export default class VersionableRepository<D extends mongoose.Document, M extends mongoose.Model<D>> {
     private model: M;
-
     constructor(model) {
         this.model = model;
     }
@@ -11,39 +11,46 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
         return String(mongoose.Types.ObjectId());
     }
 
-    public async count() {
-        return await this.model.countDocuments();
+    public count() {
+        return this.model.countDocuments();
+    }
+    public findOne(query) {
+        return this.model.findOne(query).lean();
+    }
+    protected find(query = {}): DocumentQuery<D[], D> {
+        return this.model.find(query);
     }
 
-    public async findOne(query: object) {
-        return await this.model.findOne(query).lean();
-    }
 
-    public async create(data: any, creator): Promise<D> {
+    public async createUser(data: any, creator): Promise<D> {
         const id = VersionableRepository.generateObjectId();
 
-        const modelData = {
-            ...data,
+        const model = new this.model({
+          ...data,
+            _id: id,
             originalId: id,
             createdBy: creator,
-            _id: id,
-        };
+            createdAt: Date.now(),
 
-        return await this.model.create(modelData);
+        });
+        // return await this.model.create(model);
+        return await model.save();
     }
 
-    public async getUser(data: any) {
-        return await this.model.findOne(data);
+
+
+    public getUser(data: any) {
+        return this.model.findOne(data);
     }
 
     public async update(id: string, dataToUpdate: any, updator) {
 
         let originalData;
         // console.log()
-        await this.findOne({ _id: id, updatedAt: null, deletedAt: null })
+        await this.findOne({ id: id, updatedAt: undefined, deletedAt: undefined })
             .then((data) => {
                 if (data === null) {
-                    throw '';
+                    throw undefined;
                 }
                 originalData = data;
                 const newId = VersionableRepository.generateObjectId();
@@ -80,10 +87,10 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
         let originalData;
 
-        await this.findOne({ _id: id, deletedAt: null })
+        await this.findOne({ id: id, deletedAt: undefined })
             .then((data) => {
                 if (data === null) {
-                    throw '';
+                    throw undefined;
                 }
 
                 originalData = data;
@@ -98,10 +105,13 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
                 this.model.updateOne({ _id: oldId }, modelDelete)
                     .then((res) => {
                         if (res === null) {
-                            throw '';
+                            throw undefined;
                         }
+                    })
+                    .catch((err) => {
+                        console.log('Error: ', err);
                     });
-
             });
     }
+
 }

@@ -21,7 +21,7 @@ class Server {
   }
 
   public setupRoutes() {
-    // const { app } = this;
+    const { app } = this;
     this.app.use('/health-check', (req, res, next) => {
       res.send('I am Ok');
       next();

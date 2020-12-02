@@ -1,7 +1,17 @@
-import {permissions} from "./Constants";
-const {getUsers}= permissions;
-export default function hasPermission(moduleName,role,permissionType)
-{
-const {all}=moduleName;
-return all.includes(role) || moduleName[permissionType].includes(role);
-}
+import { permissions } from './Constants';
+export const hasPermission = (moduleName: string, role: string, permissionType: string): boolean => {
+    console.log(permissions);
+    console.log(moduleName);
+    const temp = permissions[moduleName];
+    if (!temp || !temp[permissionType]) {
+        return false;
+    }
+    if (temp.all.includes(role)) {
+        return true;
+    }
+    if (!temp[permissionType].includes(role)) {
+        return false;
+    }
+    return true;
+
+};
